@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tarank: Numerology and number-based astrology</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Ccircle%20cx=%2232%22%20cy=%2232%22%20r=%2222%22%20fill=%22none%22%20stroke=%22%23F2C867%22%20stroke-opacity=%22.55%22%20stroke-width=%221.2%22/%3E%3Ccircle%20cx=%2232%22%20cy=%2232%22%20r=%2213%22%20fill=%22none%22%20stroke=%22%23F2C867%22%20stroke-opacity=%22.45%22%20stroke-width=%221%22%20stroke-dasharray=%222%203%22/%3E%3Cpolygon%20points=%2232,16%2035.5,28.5%2048,32%2035.5,35.5%2032,48%2028.5,35.5%2016,32%2028.5,28.5%22%20fill=%22%23F2C867%22/%3E%3Ccircle%20cx=%2254%22%20cy=%2232%22%20r=%224.2%22%20fill=%22%23F472B6%22/%3E%3Ccircle%20cx=%2243%22%20cy=%2213%22%20r=%223.5%22%20fill=%22%2334D399%22/%3E%3Ccircle%20cx=%2213%22%20cy=%2243%22%20r=%223.5%22%20fill=%22%2360A5FA%22/%3E%3Ccircle%20cx=%2225.5%22%20cy=%2220.7%22%20r=%223%22%20fill=%22%23F59E0B%22/%3E%3Ccircle%20cx=%2238.5%22%20cy=%2243.3%22%20r=%223%22%20fill=%22%23F87171%22/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Source+Serif+4:wght@400;600&family=Cinzel:wght@500;700&display=swap">
+<style>
+:root{--bg:#EEE9FF;--bg2:#D9E1FA;--ink:#1E1B4B;--mut:#55598A;--acc:#5B3FD0;--gold:#8A5A00;--card:rgba(255,255,255,.74);--field:#fff;--line:rgba(91,63,208,.24);--glow:rgba(91,63,208,.16);--stars:0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0A0C20;--bg2:#2C2068;--ink:#EEF0FF;--mut:#B0B6DE;--acc:#7FE3D3;--gold:#F2C867;--card:rgba(26,29,70,.66);--field:rgba(255,255,255,.08);--line:rgba(166,156,255,.30);--glow:rgba(242,200,103,.15);--stars:1}}
+:root[data-theme="dark"]{--bg:#0A0C20;--bg2:#2C2068;--ink:#EEF0FF;--mut:#B0B6DE;--acc:#7FE3D3;--gold:#F2C867;--card:rgba(26,29,70,.66);--field:rgba(255,255,255,.08);--line:rgba(166,156,255,.30);--glow:rgba(242,200,103,.15);--stars:1}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 80px);scroll-behavior:smooth;height:100%}
+*{box-sizing:border-box}
+body{margin:0;min-height:100%;color:var(--ink);font:400 17px/1.65 "Source Serif 4",Georgia,serif;background:radial-gradient(1100px 700px at 85% -10%,var(--bg2),transparent 62%),radial-gradient(800px 600px at -5% 35%,var(--glow),transparent 62%),radial-gradient(900px 700px at 60% 110%,var(--bg2),transparent 60%),var(--bg);background-attachment:fixed}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:var(--stars);background-image:radial-gradient(1.5px 1.5px at 20px 30px,#fff,transparent),radial-gradient(1px 1px at 120px 80px,#fff,transparent),radial-gradient(2px 2px at 200px 160px,#F2C867,transparent),radial-gradient(1px 1px at 70px 140px,#fff,transparent),radial-gradient(1.5px 1.5px at 170px 20px,#cfd6ff,transparent);background-size:260px 210px}
+h1,h2,h3,.num{margin:0;line-height:1.15}
+h1,h2,.num,nav b{font-family:Cinzel,"Trajan Pro",Georgia,serif;letter-spacing:.02em}
+h3{font:600 19px/1.2 "Bricolage Grotesque","Segoe UI",system-ui,sans-serif}
+.wrap{max-width:1000px;margin:0 auto;padding:0 18px}
+nav{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:5;display:flex;gap:6px 18px;flex-wrap:wrap;align-items:center;margin:10px 0 0;padding:10px 20px;background:var(--card);border:1px solid var(--line);border-radius:999px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);font:500 15px "Bricolage Grotesque",system-ui,sans-serif}
+nav b{margin-right:auto;font-size:22px;color:var(--gold)}
+nav a{color:var(--mut);text-decoration:none;padding:4px 2px}nav a:hover,nav a:focus-visible{color:var(--acc)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.hero{position:relative;padding:56px 0 34px;overflow-x:clip}
+.hero>*:not(.wheel){position:relative;z-index:1}
+.wheel{position:absolute;right:-70px;top:-10px;width:min(440px,80vw);color:var(--gold);opacity:.5;pointer-events:none;animation:spin 150s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+h1{font-size:clamp(34px,6.4vw,64px);max-width:15ch;background:linear-gradient(95deg,var(--ink) 20%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{max-width:60ch;color:var(--mut);margin:16px 0 26px;font-size:18px}
+form{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;align-items:end;max-width:780px;padding:18px;background:var(--card);border:1px solid var(--line);border-radius:18px;backdrop-filter:blur(10px)}
+label{display:flex;flex-direction:column;font:500 14px "Bricolage Grotesque",system-ui,sans-serif;color:var(--mut);gap:5px}
+input,select,button{font:inherit;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--field);color:var(--ink)}
+input[type=date]{color-scheme:light dark}
+button{background:linear-gradient(135deg,#F6D27A,#E39A3B);color:#1B1230;border:0;font-weight:700;cursor:pointer;box-shadow:0 10px 26px -12px #E39A3B;transition:transform .15s}
+button:hover{transform:translateY(-1px)}
+@media(max-width:640px){form{grid-template-columns:1fr}.wheel{opacity:.28;right:-120px}nav{border-radius:20px}}
+section{margin:26px 0;padding:32px 26px;background:var(--card);border:1px solid var(--line);border-radius:24px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 24px 60px -34px var(--glow)}
+@media(max-width:640px){section{padding:24px 16px}}
+h2{font-size:clamp(26px,4vw,38px);margin-bottom:10px;color:var(--ink)}
+h2::after{content:"";display:block;width:64px;height:3px;margin-top:12px;border-radius:2px;background:linear-gradient(90deg,var(--gold),transparent)}
+.sub{color:var(--mut);max-width:64ch;margin:0 0 22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;transition:transform .2s,border-color .2s,box-shadow .2s}
+.card:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 18px 36px -22px var(--gold)}
+.card h3{margin-bottom:4px}
+.num{font-size:46px;color:var(--gold);font-weight:700;text-shadow:0 0 26px var(--glow)}
+.small{font-size:15px;color:var(--mut)}
+.res{display:none;margin-top:30px;padding:24px;background:var(--card);border:1px solid var(--line);border-radius:22px;backdrop-filter:blur(10px)}.res.on{display:block}
+.two{display:grid;grid-template-columns:1fr 240px;gap:24px;align-items:start}
+@media(max-width:700px){.two{grid-template-columns:1fr}}
+.lo{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:240px}
+.lo div{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:14px;background:var(--card);font:700 24px Cinzel,Georgia,serif}
+.lo div small{font:400 12px "Source Serif 4",serif;color:var(--mut)}
+.lo .miss{border-style:dashed;color:var(--mut);opacity:.7}
+.lo .has{border-color:var(--gold);color:var(--gold);box-shadow:inset 0 0 18px var(--glow)}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:15px}
+th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 14px "Bricolage Grotesque",sans-serif;color:var(--gold)}
+tr:hover td{background:var(--glow)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:8px 0}
+details[open]{border-color:var(--gold)}
+summary{cursor:pointer;font:600 16px "Bricolage Grotesque",sans-serif}
+footer{padding:26px 0 44px;color:var(--mut);font-size:14px;text-align:center}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.wheel{animation:none}.card,button{transition:none}.card:hover,button:hover{transform:none}}
+@media print{nav,form,section,footer,button,.wheel{display:none!important}body{background:#fff!important;color:#000;font-size:14px}body::before{display:none}h1{background:none;color:#000}.res{display:block;border:0;background:none;padding:0}.card,details{break-inside:avoid;background:none}.num{text-shadow:none;color:#6b4a00}th{color:#444}details>*{display:block}}
+</style>
+<style>
+:root{--mix:#1E1B4B;--aur:.5}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--mix:#fff;--aur:.95}}
+:root[data-theme="dark"]{--mix:#fff;--aur:.95}
+body::after{content:"";position:fixed;inset:-20%;z-index:-2;pointer-events:none;opacity:var(--aur);filter:blur(34px);background:radial-gradient(38% 34% at 18% 22%,rgba(124,92,255,.45),transparent 70%),radial-gradient(34% 30% at 82% 18%,rgba(45,212,191,.30),transparent 70%),radial-gradient(40% 34% at 72% 82%,rgba(244,114,182,.30),transparent 70%),radial-gradient(30% 28% at 10% 85%,rgba(251,191,36,.20),transparent 70%);animation:drift 38s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(4%,-3%,0) scale(1.08)}}
+@keyframes tw{from{opacity:calc(var(--stars)*.5)}to{opacity:var(--stars)}}
+body::before{animation:tw 5s ease-in-out infinite alternate}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.res.on{animation:rise .6s ease both}
+.res .card{animation:rise .7s ease both}
+.hero::before{content:"";position:absolute;right:-6%;top:-12%;width:540px;height:540px;max-width:90vw;border-radius:50%;background:radial-gradient(circle at 35% 35%,var(--glow),transparent 66%);filter:blur(8px);pointer-events:none}
+h1{font-size:clamp(38px,7vw,72px);font-weight:700;letter-spacing:.015em}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px;padding:0;list-style:none}
+.pills li{padding:6px 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);backdrop-filter:blur(8px);font:500 14px "Bricolage Grotesque",system-ui,sans-serif;color:var(--mut)}
+.pills li::before{content:"✦ ";color:var(--gold)}
+nav a.on{color:var(--gold);border-bottom:2px solid var(--gold)}
+nav b::before{content:none}nav b{display:inline-flex;align-items:center}.lg{width:32px;height:32px;margin-right:9px;color:var(--gold);flex:none}
+.card{--pcn:color-mix(in srgb,var(--pc,var(--gold)) 62%,var(--mix));border-top:3px solid var(--pc,var(--gold))}
+.card .num{color:var(--pcn)}
+.card:hover{border-color:var(--pc,var(--gold));box-shadow:0 20px 40px -22px var(--pc,var(--gold))}
+section h2::before{color:var(--gold);margin-right:.35em;font-weight:400}
+#numbers h2::before{content:"✦"}#master h2::before{content:"☾"}#stages h2::before{content:"☍"}#astro h2::before{content:"♃"}#tools h2::before{content:"♡"}#systems h2::before{content:"✧"}#terms h2::before{content:"✺"}
+section{position:relative;overflow:hidden}
+section::after{content:"";position:absolute;right:-60px;top:-60px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,var(--glow),transparent 70%);pointer-events:none}
+.res h3{color:var(--gold)}
+footer::before{content:"✦ ✧ ✦";display:block;color:var(--gold);letter-spacing:.6em;margin-bottom:10px}
+@media(prefers-reduced-motion:reduce){body::after,body::before,.res.on,.res .card{animation:none}}
+@media print{body::after,.hero::before,section::after,footer::before,nav b::before{display:none!important}.card{border-top-color:#999}}
+</style>
+<style>
+#tg{padding:0;width:38px;height:38px;border-radius:50%;font-size:18px;line-height:1;background:var(--field);color:var(--gold);border:1px solid var(--line);box-shadow:none}
+.two{grid-template-columns:1fr 310px}
+.loring{position:relative;width:300px;max-width:100%;aspect-ratio:1;margin:0 auto}
+.loring svg{position:absolute;inset:0;width:100%;height:100%;color:var(--gold)}
+.loring .lo{position:absolute;inset:19%;max-width:none;gap:5px}
+.loring .lo div{font-size:20px;border-radius:10px}
+.loring .lo small{font-size:10px}
+@media(max-width:700px){.two{grid-template-columns:1fr}}
+@media(max-width:640px){
+body{font-size:16px}.wrap{padding:0 12px}
+nav{flex-wrap:nowrap;overflow-x:auto;gap:16px;white-space:nowrap;border-radius:16px;padding:8px 14px;scrollbar-width:none}nav::-webkit-scrollbar{display:none}
+nav b{font-size:19px}
+section{margin:16px 0}.hero{padding:30px 0 18px}h1{font-size:36px}.lead{font-size:16px;margin:12px 0 18px}
+.grid{grid-template-columns:repeat(2,1fr);gap:10px}.card{padding:12px}.num{font-size:34px}.card h3{font-size:16px}
+.res{padding:14px}.pills li{font-size:13px;padding:4px 10px}table{min-width:480px}form{padding:14px}}
+</style>
+<style>
+.side{position:fixed;top:calc(env(safe-area-inset-top,0px) + 96px);bottom:24px;width:calc((100vw - 1000px)/2 - 28px);max-width:210px;display:none;pointer-events:none;color:var(--gold);z-index:0}
+.side.l{left:14px}.side.r{right:14px}
+.side svg{width:100%;height:100%;overflow:visible;animation:bob 9s ease-in-out infinite alternate}
+.side.r svg{animation-delay:-4s}
+@keyframes bob{to{transform:translateY(-10px)}}
+@media(min-width:1260px){.side{display:block}}
+@media(prefers-reduced-motion:reduce){.side svg{animation:none}}
+@media print{.side{display:none!important}}
+</style>
+</head>
+<body>
+<aside class="side l" id="sl" aria-hidden="true"></aside><aside class="side r" id="sr" aria-hidden="true"></aside>
+<div class="wrap">
+<nav><b><svg class="lg" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="22" fill="none" stroke="currentColor" stroke-opacity=".55" stroke-width="1.2"/><circle cx="32" cy="32" r="13" fill="none" stroke="currentColor" stroke-opacity=".45" stroke-width="1" stroke-dasharray="2 3"/><polygon points="32,16 35.5,28.5 48,32 35.5,35.5 32,48 28.5,35.5 16,32 28.5,28.5" fill="currentColor"/><circle cx="54" cy="32" r="4.2" fill="#F472B6"/><circle cx="43" cy="13" r="3.5" fill="#34D399"/><circle cx="13" cy="43" r="3.5" fill="#60A5FA"/><circle cx="25.5" cy="20.7" r="3" fill="#F59E0B"/><circle cx="38.5" cy="43.3" r="3" fill="#F87171"/></svg>Tarank</b><a href="#numbers">Numbers 1–9</a><a href="#master">Master and karmic</a><a href="#astro">Astrology</a><a href="#stages">Life stages</a><a href="#tools">Compatibility and name check</a><a href="#systems">Systems</a><a href="#terms">Terms</a><button id="tg" type="button" aria-label="Switch theme">☾</button></nav>
+
+<header class="hero"><div class="wheel" id="wheel" aria-hidden="true"></div>
+<h1>Read your name and birth date as numbers</h1>
+<p class="lead">Enter your details to get your numbers, your Lo Shu grid, your zodiac sign and the planet that links the two. Readings follow Harish Johari (Numerology with Tantra, Ayurveda, and Astrology) and Sepharial (The Kabala of Numbers).</p>
+<ul class="pills"><li>Psychic, destiny and name</li><li>Lo Shu grid</li><li>Planets and signs</li><li>Couples</li><li>Life phases</li></ul>
+<form id="f">
+<label>Full name at birth<input id="nm" autocomplete="name" required placeholder="e.g. Asha Rao"></label>
+<label>Date of birth<input id="dob" type="date" required></label>
+<label>Letter system<select id="sys"><option value="c">Unit (Hebraic), as in the books</option><option value="p">Pythagorean</option></select></label>
+<button type="submit">Calculate</button>
+</form>
+<div id="res" class="res" aria-live="polite"></div>
+</header>
+
+<section id="numbers"><h2>The nine root numbers</h2>
+<p class="sub">Every number reduces to 1–9. Each carries a planet, a gift and a shadow. Planets here follow the Indian system, with Rahu for 4 and Ketu for 7.</p>
+<div class="grid" id="ng"></div></section>
+
+<section id="master"><h2>Master and karmic numbers</h2>
+<p class="sub">Some totals are read before they reduce. Master numbers keep their double-digit form; karmic debt numbers point to a lesson carried in.</p>
+<div class="grid" id="mg"></div></section>
+
+<section id="astro"><h2>Astrology from numerology</h2>
+<p class="sub">Numerology assigns each root number to a planet. Your psychic number (birth day) shows how you see yourself, your destiny number (full birth date) shows what life brings. Your sun sign has its own ruling planet, so the two can agree or pull apart.</p>
+<h3>Number to planet</h3><div class="tw"><table id="pt"></table></div>
+<h3 style="margin-top:26px">Sign to ruling planet</h3><div class="tw"><table id="st"></table></div></section>
+
+<section id="stages"><h2>Stages of life</h2>
+<p class="sub">Numerology divides life into four phases, called pinnacles, and runs a repeating nine-year cycle through them. Enter your details at the top to see your own phases with ages. The cycle below applies to everyone. These are common themes, not forecasts of specific events.</p>
+<h3>The nine-year cycle</h3><div class="tw"><table id="py"></table></div>
+<h3 style="margin-top:26px">The four phases</h3>
+<p class="sub">Phase one runs from birth to age 36 minus your Life Path. Phases two and three last nine years each. Phase four runs for the rest of life.</p>
+<div class="grid" id="phg"></div></section>
+
+<section id="tools"><h2>Compatibility and name check</h2>
+<p class="sub">Both tools use the Vedic friendship between planets. Compatibility compares two people. The name check suggests small spelling changes that move a name total (Unit system) to a number you choose.</p>
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+<div class="card" style="grid-column:1/-1"><h3>Compatibility for a couple</h3>
+<form id="cf" style="grid-template-columns:1fr"><label>Woman's birth date (Person A)<input id="c1" type="date" required></label><label>Man's birth date (Person B)<input id="c2" type="date" required></label><label>Woman's full name (optional)<input id="c3"></label><label>Man's full name (optional)<input id="c4"></label><button type="submit">Compare</button></form>
+<div id="cr" aria-live="polite" style="margin-top:12px"></div></div>
+<div class="card"><h3>Name check</h3>
+<form id="nf" style="grid-template-columns:1fr"><label>Full name<input id="n1" required></label><label>Birth date<input id="n2" type="date" required></label><label>Target number<select id="n3"><option value="0">Same as my driver number</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option></select></label><button type="submit">Suggest spellings</button></form>
+<div id="nr" aria-live="polite" style="margin-top:12px"></div></div>
+</div></section>
+
+<section id="systems"><h2>Systems of numerology</h2>
+<details open><summary>Pythagorean</summary><p>Letters run A=1 to I=9, then restart, so J=1 and S=1. The most common Western method. Used for Expression, Soul Urge and Personality here.</p></details>
+<details><summary>Unit (Hebraic) system</summary><p>Used by Johari and Sepharial. A, I, J, Q, Y = 1; B, C, K, R = 2; G, L, S = 3; D, M, T = 4; E, N = 5; U, V, W, X = 6; O, Z = 7; F, H, P = 8. Nothing is 9. Name numbers on this site use it by default.</p></details>
+<details open><summary>Johari: psychic, destiny and name</summary><p>Three numbers describe a person. The psychic number is the birth day reduced to one digit (how you see yourself, strongest until about 35 to 40). The destiny number is the sum of the whole birth date (your fruits of past actions, stronger after 35). The name number comes from the full name in the Unit system. Compound birth days, exalted numbers, zeros in the date and year numbers are all read from the book.</p></details>
+<details><summary>Sepharial: the Kabala of Numbers</summary><p>Sepharial (1920) reads numbers as symbols, with the Hebraic alphabet for scripture and tarot, and a phonetic alphabet tied to the planets. He lists planet numbers (Sun 1, Moon 7 or 2, Jupiter 3, Mercury 5, Venus 6, Saturn 8, Mars 9, Sun also 4) and gives a meaning for each name total up to 50.</p></details></section>
+
+<section id="terms"><h2>Core terms</h2><div id="tm"></div></section>
+<footer>Based on Harish Johari, Numerology with Tantra, Ayurveda, and Astrology, and Sepharial, The Kabala of Numbers; the wording is condensed here, and health and gem-powder advice from Johari is left out. For reflection and entertainment. Numerology and astrology are not scientifically validated and should not guide medical, legal or money decisions.</footer>
+</div>
+<script>
+const D={
+1:{p:"Sun",w:"Sun",g:"Ruby",k:"Leadership, drive, independence",s:"Starts things, stands alone, decides fast",c:"Ego, stubbornness"},
+2:{p:"Moon",w:"Moon",g:"Pearl",k:"Partnership, intuition, tact",s:"Listens, mediates, senses moods",c:"Oversensitivity, indecision"},
+3:{p:"Jupiter",w:"Jupiter",g:"Yellow sapphire",k:"Expression, optimism, teaching",s:"Communicates, inspires, creative",c:"Scattered focus, exaggeration"},
+4:{p:"Rahu",w:"Uranus",g:"Hessonite",k:"Structure, discipline, unconventional thinking",s:"Builds systems, works steadily",c:"Rigidity, sudden upsets"},
+5:{p:"Mercury",w:"Mercury",g:"Emerald",k:"Freedom, trade, quick wit",s:"Adapts, sells, learns fast",c:"Restlessness, nerves"},
+6:{p:"Venus",w:"Venus",g:"Diamond",k:"Love, home, beauty, duty",s:"Nurtures, harmonizes, loyal",c:"Over-giving, control through care"},
+7:{p:"Ketu",w:"Neptune",g:"Cat's eye",k:"Analysis, spirituality, solitude",s:"Researches, detaches, sees patterns",c:"Withdrawal, secrecy"},
+8:{p:"Saturn",w:"Saturn",g:"Blue sapphire",k:"Power, money, karma, endurance",s:"Manages, persists, earns late and lasting success",c:"Control, heavy burdens"},
+9:{p:"Mars",w:"Mars",g:"Red coral",k:"Courage, completion, service",s:"Acts, protects, finishes",c:"Anger, impatience"},
+11:{p:"Moon",k:"Master intuition, inspiration",s:"Visionary insight and a gift for lifting others",c:"Nerves, doubt; often lived as a 2"},
+22:{p:"Rahu",k:"Master builder",s:"Turns large ideas into lasting structures",c:"Pressure, fear of the scale; often lived as a 4"},
+33:{p:"Venus",k:"Master teacher, healer",s:"Selfless guidance and care",c:"Self-sacrifice; often lived as a 6"}};
+const KD={13:"Laziness in a past life: results now come through steady, honest work.",14:"Misused freedom: learn moderation and commitment.",16:"Ego collapse: plans built on pride fall, so humility rebuilds them.",19:"Misused power: learn to give and receive help."};
+const SG={Aries:["Mars",9],Taurus:["Venus",6],Gemini:["Mercury",5],Cancer:["Moon",2],Leo:["Sun",1],Virgo:["Mercury",5],Libra:["Venus",6],Scorpio:["Mars",9],Sagittarius:["Jupiter",3],Capricorn:["Saturn",8],Aquarius:["Saturn",8],Pisces:["Jupiter",3]};
+const CUT=[[1,20,"Aquarius"],[2,19,"Pisces"],[3,21,"Aries"],[4,20,"Taurus"],[5,21,"Gemini"],[6,21,"Cancer"],[7,23,"Leo"],[8,23,"Virgo"],[9,23,"Libra"],[10,23,"Scorpio"],[11,22,"Sagittarius"],[12,22,"Capricorn"]];
+const TERMS=[["Life Path","From your birth date. The road you travel and its main lessons."],["Expression (Destiny)","From every letter of your full name. Your natural talents and how you use them."],["Soul Urge","From the vowels. What you want deep down."],["Personality","From the consonants. How others first see you."],["Birth Day","The day of the month you were born; a single talent you carry."],["Maturity","Life Path plus Expression. Grows clearer after about age 35."],["Personal Year","Birth month and day plus the current year. Sets the theme of a 9-year cycle."],["Psychic, Destiny and Name","Johari's three numbers: birth day, full birth date and full name."],["Exalted number","A single number reached from one special birth day, such as a 1 from day 28. The book calls these stronger than other numbers of the same kind."],["Lo Shu grid","3 by 3 square of your birth-date digits. Missing digits mark qualities to build."],["Pinnacles","Four life phases, each with an opportunity. The first ends at age 36 minus your Life Path."],["Challenges","The lesson paired with each pinnacle, found by subtracting birth month, day and year numbers."],["Personal Month and Day","Personal Year plus the month, then plus the day. Short-term themes."],["Karmic debt","Totals of 13, 14, 16 or 19 before reduction."],["Master numbers","11, 22 and 33, kept unreduced because of their higher potential."]];
+const $=s=>document.querySelector(s);
+const cd=D[1];
+const ds=n=>String(n).split("").reduce((a,b)=>a+ +b,0);
+function red(n){let k=null;while(n>9&&![11,22,33].includes(n)){if([13,14,16,19].includes(n))k=n;n=ds(n)}return{v:n,k}}
+const one=n=>{while(n>9)n=ds(n);return n};
+const CH="12245838112345781234666617";
+const val=(c,s)=>{const i=c.charCodeAt(0)-65;return s==="c"?+CH[i]:i%9+1};
+function nm(name,s){const L=name.toUpperCase().replace(/[^A-Z]/g,"");let a=0,v=0,c=0;for(const x of L){const n=val(x,s);a+=n;"AEIOU".includes(x)?v+=n:c+=n}return{ex:red(a),su:red(v),pe:red(c)}}
+function sign(m,d){let r="Capricorn";for(const c of CUT)if(m>c[0]||m===c[0]&&d>=c[1])r=c[2];return r}
+const card=(t,r,d)=>{const x=D[r.v]||{};return`<div class="card" style="--pc:${PC[bs(r.v)]}"><h3>${t}</h3><div class="num">${r.v}</div><div class="small">${d}</div><p style="margin:8px 0 0">${x.k||""}.</p>${r.k?`<p class="small"><b>Karmic ${r.k}:</b> ${KD[r.k]}</p>`:""}</div>`};
+const PC={1:"#F59E0B",2:"#A5B4FC",3:"#FACC15",4:"#A78BFA",5:"#34D399",6:"#F472B6",7:"#22D3EE",8:"#60A5FA",9:"#F87171"};
+const SW={1:"Sun (+)",2:"Moon (−)",3:"Jupiter",4:"Sun (−)",5:"Mercury",6:"Venus",7:"Moon (+)",8:"Saturn",9:"Mars"};
+const BK={
+1:{pl:"Sun",st:"21 Mar–28 Apr, 10 Jul–20 Aug",wk:"Oct–Dec",gd:"1, 4, 10, 13, 19, 22, 28, 31 (best 1, 19, 28)",dy:"Sunday, Monday",co:"orange, yellow, gold, copper",sn:"ruby for men; red spinel or garnet for women",dt:"Sun-god",fr:"Other 1s. Drawn to 1, 4, 7. Avoid 8 for marriage.",gy:"1, 10, 19, 28, 37, 46, 55, 64, 73, 82, 91"},
+2:{pl:"Moon",st:"20 Jun–27 Jul",wk:"Dec–Feb",gd:"2, 11, 20, 29; also 1, 4, 7, 10, 13, 16, 19, 22, 25",dy:"Monday (Sunday also)",co:"white, light green, cream, blue, grape",sn:"pearl, moonstone, quartz",dt:"Shiva",fr:"Days 2, 11, 20, 29 and 4, 6, 8, 9. Drawn to 1, 2, 7, 8, 9 (1 and 9 best). 4 and 5 bring difficulty.",gy:"1, 2, 4, 7, 10, 11, 13, 16, 19, 20, 22, 25, 28, 29, 31 and more"},
+3:{pl:"Jupiter",st:"19 Feb–20 Mar, 21 Nov–20 Dec",wk:"Oct–Nov",gd:"3, 12, 21, 30; also 6, 9, 15, 18, 24, 27",dy:"Thursday (Monday, Wednesday for money)",co:"yellow, pink, blue, light purple",sn:"yellow sapphire, yellow topaz",dt:"Vishnu",fr:"Days 1, 3, 6, 9, 12 and so on; 5 and 7 friendly. Best partners 3, 5, 9 born in strong periods.",gy:"3, 12, 21, 30, 33, 36, 48, 57, 66, 75"},
+4:{pl:"Rahu",st:"21 Mar–28 Apr, 10 Jul–20 Aug",wk:"Oct–Dec",gd:"4, 13, 22, 31",dy:"Saturday, Sunday, Monday",co:"blue, grey, khaki, shining colours",sn:"hessonite",dt:"Ganesha",fr:"Friends 1, 3, 4, 5, 6, 7. Best partner 1, then 6, then 4.",gy:"4, 13, 22, 31, 40, 48, 49, 58, 67, 76, 85; also 8, 17, 26, 35, 44, 53"},
+5:{pl:"Mercury",st:"21 May–20 Jun, 21 Aug–20 Sep",wk:"May, Sep, Dec",gd:"5, 14, 23",dy:"Wednesday, Friday",co:"green, turquoise, light brown, smoky grey, white",sn:"emerald",dt:"Mahalakshmi",fr:"Best friend 5; also 1, 3, 9. Partners 1, 3, 5, 9 born in the strong periods.",gy:"5, 14, 23, 32, 41, 50, 59, 68, 77, 86; years adding to 1 also favour"},
+6:{pl:"Venus",st:"20 Apr–18 May, 21 Sep–19 Oct",wk:"Apr, Oct, Nov, and when Venus is retrograde",gd:"6, 15, 24; also 3, 9, 12, 18, 21, 27, 30",dy:"Wednesday, Friday",co:"white, light blue, pink, chrome yellow",sn:"diamond, or white sapphire",dt:"Kartikeya",fr:"Harmony with 1, 3, 6, 9; fine with 2, 5, 7; 4 and 8 less so. Best romance with 1 and 3.",gy:"6, 15, 24, 33, 42, 51, 63, 69, 78; age 35 is pivotal"},
+7:{pl:"Ketu",st:"21 Jun–20 Jul",wk:"Jan–Feb",gd:"7, 16, 25; also 1, 10, 19, 28",dy:"Sunday, Monday, Wednesday",co:"light green, light blue, white; avoid black",sn:"cat's-eye",dt:"Narsingha",fr:"Days 7, 16, 25 and 1, 10, 19, 28. Days 25 and 28 favoured in romance.",gy:"21, 28, 35, 42, 49 are turning points"},
+8:{pl:"Saturn",st:"20 Sep–25 Oct, 20 Jan–20 Feb",wk:"Dec, Mar, Apr, early Jan, late Feb, and when Saturn is retrograde",gd:"8, 17, 26; dates adding to 1, 3, 6",dy:"Saturday",co:"black, dark blue, grey, purple",sn:"blue sapphire, amethyst, lapis lazuli",dt:"Saturn",fr:"Days 8, 17, 26 and 2, 4, 6, 12, 15, 20, 24. Choose 1, 3, 5, 6 for romance; avoid 4, 8, 9.",gy:"8, 17, 26, 35, 44, 53, 62, 71, 80, 89; years divisible by 4"},
+9:{pl:"Mars",st:"21 Mar–26 Apr, 21 Oct–27 Nov",wk:"Early Mar, May, Jun; 1–21 Oct; 27 Nov–27 Dec",gd:"9, 18, 27; also 3, 6, 15, 21, 24, 30",dy:"Tuesday, Friday",co:"red, pink",sn:"coral, carnelian, red jasper",dt:"Hanuman",fr:"Friends 3, 6, 9, 12 and so on; 5 and 7 fine; 3 best. Friends can turn into rivals.",gy:"9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99; 27 to 36 and 45 matter most"}};
+const BL=[["Planet","pl"],["Strong periods","st"],["Weak periods","wk"],["Good dates","gd"],["Good days","dy"],["Colours","co"],["Stones","sn"],["Deity","dt"],["Friends and romance","fr"],["Good years of life","gy"]];
+const bkH=n=>`<div class="tw"><table style="min-width:0;font-size:14px">${BL.map(x=>`<tr><th>${x[0]}</th><td>${BK[n][x[1]]}</td></tr>`).join("")}</table></div>`;
+const PS={1:"Hard to handle as a psychic number.",2:"Good as a psychic number.",3:"Good as a psychic number.",4:"Good as a psychic number.",5:"No psychic warning given.",6:"Good for women as a psychic number.",7:"Self-centred, dreamy and hard to reach as a psychic number.",8:"Good as a psychic number.",9:"Uncomfortable as a psychic number, especially in marriage."};
+const DS={1:"Becomes lucky as a destiny number.",2:"Brings difficulties as a destiny number.",3:"Brings problems as a destiny number.",4:"Brings difficulties as a destiny number.",5:"Good as a destiny number.",6:"Not good for men or women as destiny, though friends help.",7:"Good as a destiny number.",8:"Not good as a destiny number.",9:"Good as a destiny number."};
+const EXD={28:1,29:2,12:3,31:4,23:5,32:5,24:6,33:6,25:7,34:7,26:8,35:8,27:9,36:9};
+const YR={1:"Old problems ease and people in authority help. Good for new ventures, writing and competitions. Health and confidence improve.",2:"More magnetism, new friends and less worry. Good for property and a new home. Avoid hurry.",3:"Knowledge and honour grow. Good for finishing old projects and starting business. Take care signing contracts or entering lawsuits.",4:"Success with difficulty. Money sources grow, and marriage or a partner may come. Good for travel and dealing with authority, less so for romance.",5:"Success, steadier money and a wider circle. Good for business, travel and partnerships. Be careful when talking and signing deals.",6:"Family harmony, romance and children. Good for the arts, decoration and spending on enjoyment. Work and unexpected gain are possible.",7:"Misunderstandings and more work for less profit. Test friends, take fewer risks and stay patient. Good for legal cases, healing and study.",8:"Take care of health and avoid stress. Good for worldly success, independence, social work and winning over opponents.",9:"A year of completion and fulfilled wishes, with favours from authority. Expect small quarrels with officials, avoid doubt and perfectionism, and watch for a windfall."};
+const SC="impulse, ambition|fatality, destruction|faith, destiny|solidity, power|marriage, pleasure|work perfected|rest, balance|protection, justice|grief, anxiety|reason, success|discord, deceit|a fortunate name, a city|wrongdoing|sacrifice, loss|virtue, culture|luxury, good fortune|misfortune, obscurity|miserliness, hardness|folly|wisdom, melancholy|mystery, fertility|penalty, hurt|revolt, prejudice|travel, inconstancy|intelligence, offspring|charity|bravery|gifts, omens|news|marriage, celebrity|goodness, publicity|nuptials|gentleness, grace|suffering, retribution|health, peace|intuition, genius|fidelity|malice, greed|honours|feasting|disgrace|short life, misery|worship|kingship, magnificence|offspring|fruitfulness|long life, happiness|justice, a court|avarice|freedom, release".split("|");
+const HD={1:"divine favour",2:"hesitation, fear",3:"philosophy, knowledge",4:"long journey, exile",5:"holiness",6:"perfect performance",7:"might, authority",8:"conquest, power",9:"strife, war"};
+const cm=t=>{const h=Math.floor(t/100),r=t%100,o=[];if(h&&HD[h])o.push(h*100+": "+HD[h]);if(r>0&&r<=50)o.push(r+": "+SC[r-1]);return o.join("; ")};
+function bookBlock(name,d,m,y,drv,con){
+const ws=name.trim().split(/\s+/),fu=ct(name),nn=one(fu),fn=one(ct(ws[0])),ln=ws.length>1?one(ct(ws[ws.length-1])):0;
+const z=(String(d)+String(m)+String(y)).split("0").length-1,raw=ds(d)+ds(m)+ds(y),set=[...new Set([drv,con,nn])],sub=a=>set.every(n=>a.includes(n));
+const hm=set.length===1?"All three numbers match, a tightly focused pattern.":sub([3,6,9])?"Your three numbers all sit in the 3, 6, 9 family, which Johari calls compatible, so life runs with more harmony.":(sub([3,5,7])||sub([2,5,7]))?"Your numbers fall in a group Johari calls incompatible, so your name and destiny may pull apart. Adjusting the name is the traditional remedy.":"Your three numbers are mixed. The more they differ, the more Johari says you feel misunderstood, so check how your name number sits with your destiny.";
+const row=(a,b,c,e)=>`<tr><td><b>${a}</b></td><td>${b}</td><td>${c}</td><td>${e}</td></tr>`;
+const T0=new Date().getFullYear();
+const yr=[T0,T0+1].map(Y=>{const n=one(m+d+Y%100+new Date(Y,m-1,d).getDay()+1);return`<tr><td>${Y}</td><td><b>${n}</b> (${D[n].p})</td><td>${YR[n]}</td></tr>`}).join("");
+const notes=[d>9?`Born on day ${d}: the ${String(d)[0]} series sets the tone, with ${drv} as your single number.`:"",EXD[d]?`Day ${d} gives an exalted ${drv}, which Johari calls stronger and more successful than other ${drv}s.`:"",z?`A zero appears in your birth date (${z}). Johari says results take more struggle, and more zeros mean more work.`:""].filter(Boolean).map(t=>`<p class="small" style="margin:4px 0">${t}</p>`).join("");
+return`<h3 style="margin-top:26px">Your three numbers, as in the books</h3><div class="tw"><table><tr><th>Number</th><th>Meaning</th><th>Planet</th><th>Note</th></tr>${row("Psychic "+drv,"Born on day "+d+". How you see yourself; strongest until about 35 to 40.",D[drv].p,PS[drv])}${row("Destiny "+con,"From the full birth date (sum "+raw+"). Stronger after 35; it shapes what your actions bring.",D[con].p,DS[con])}${row("Name "+nn,"Unit total "+fu+". First name "+fn+(ln?", family name "+ln:"")+". Full name rules official and business life.",D[nn].p,"Harmony with your psychic and destiny numbers helps.")}</table></div><p>${hm}</p>${notes}<details><summary>Traditional guide for your psychic number ${drv}</summary>${bkH(drv)}</details>${con!==drv?`<details><summary>Traditional guide for your destiny number ${con}</summary>${bkH(con)}</details>`:""}<h3 style="margin-top:20px">Year numbers (Johari's method)</h3><div class="tw"><table><tr><th>Year</th><th>Number</th><th>Theme</th></tr>${yr}</table></div><p class="small">Month plus day plus the last two digits of the year plus the weekday number of your birthday that year (Sunday is 1).</p><h3 style="margin-top:20px">Sepharial on your name total</h3><p>Total ${fu}${cm(fu)?" — "+cm(fu):". No entry in his list for this total."}.</p>`}
+const ZG="♈♉♊♋♌♍♎♏♐♑♒♓",ZN=["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
+function zr(sg){const k=ZN.indexOf(sg);let t="";for(let i=0;i<12;i++){const a=i*30*Math.PI/180,x=150+128*Math.sin(a),y=150-128*Math.cos(a),on=i===k;t+=(on?`<circle cx="${x}" cy="${y}" r="15" fill="currentColor" opacity=".22"/>`:"")+`<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="central" font-size="${on?22:16}" fill="currentColor" stroke="none" opacity="${on?1:.6}" font-weight="${on?700:400}">${ZG[i]}\uFE0E</text>`}
+return`<svg viewBox="0 0 300 300" fill="none" stroke="currentColor" stroke-width="1" aria-label="Zodiac ring, ${sg} highlighted"><circle cx="150" cy="150" r="146" opacity=".6"/><circle cx="150" cy="150" r="108" opacity=".4"/>${t}</svg>`}
+const bs=n=>n>9?one(n):n;
+const PH=["Formative years","Building years","Harvest years","Wisdom years"];
+const ST={1:"A phase of independence. You step out on your own, take lead roles and may start a business or move away. Expect to decide alone more often.",
+2:"A phase of partnerships. Relationships, marriage or close teamwork shape your days. Progress is slower and depends on patience and cooperation.",
+3:"A phase of expression and social life. Creative work, a wider circle, children or teaching. Money can come and go easily.",
+4:"A phase of building. Steady work, property, savings and health routines. Results come from effort rather than luck.",
+5:"A phase of change. Moves, job switches, travel and new people. Stability comes only when you commit to something.",
+6:"A phase of home and duty. Marriage, children, parents and community take priority. Care for others is rewarded and demanding.",
+7:"A phase of study and inner life. Specialisation, research, spiritual interest and time alone. Material gains come slowly.",
+8:"A phase of career and money. Authority, bigger responsibilities and tests of integrity. Rewards are large and so is the pressure.",
+9:"A phase of completion and service. Letting go of old roles, wider concern for others, and sometimes a major ending that clears space."};
+const PYT={1:"Start something new. Choices made now set the next nine years.",2:"Slow growth. Partnerships, patience and waiting for results.",3:"Social and creative. Communication, travel and joy, with a risk of scattered spending.",4:"Work, health, budgets and paperwork. Build foundations.",5:"Change, moves, travel and surprises. Avoid impulsive commitments.",6:"Home, family, marriage and responsibility. Commitments deepen.",7:"Rest, study and inner review. Fewer results, more insight.",8:"Money, career and authority. Big rewards or big stress.",9:"Endings and clearing out. Forgive, let go and prepare for the next 1."};
+const R={1:{w:"leading projects, starting ventures, roles with ownership",l:"needs respect and room to lead; softens when appreciated",t:"Ask before deciding for others"},
+2:{w:"counselling, diplomacy, teamwork, support roles",l:"devoted and tender; needs reassurance",t:"State needs plainly instead of hoping they are guessed"},
+3:{w:"teaching, writing, media, advisory work",l:"playful and generous; needs conversation and laughter",t:"Finish one thing before starting the next"},
+4:{w:"engineering, operations, finance, systems work",l:"loyal and practical; shows love through reliability",t:"Leave room for change and rest"},
+5:{w:"sales, travel, marketing, trade, anything with variety",l:"exciting and curious; needs freedom inside commitment",t:"Pick two priorities for the month"},
+6:{w:"care, education, design, hospitality, family business",l:"warm and committed; can smother",t:"Care for yourself before others"},
+7:{w:"research, analysis, technology, spiritual study",l:"deep but private; needs quiet",t:"Share one thought a day with someone you trust"},
+8:{w:"management, finance, law, large organisations",l:"protective and ambitious; can put work first",t:"Share power and credit"},
+9:{w:"service, healthcare, defence, leading causes",l:"passionate and generous; quick to flare",t:"Pause before reacting and finish old things before new ones"}};
+function rd(role,r){const n=r.v,x=D[n],y=R[n>9?one(n):n],lc=t=>t.toLowerCase(),f=t=>lc(t.split(",")[0]);
+const M=n>9?`<p class="small">Master number ${n}: the same themes at a higher pitch, with more pressure to live up to them.</p>`:"";
+const L={"Life Path":`Your route teaches ${lc(x.k)}. Strength: ${lc(x.s)}. Watch for: ${lc(x.c)}. Work that suits: ${y.w}. In love you are ${y.l}. Practice: ${lc(y.t)}.`,
+"Expression":`Your natural talents: ${lc(x.s)}. Fields where they show: ${y.w}.`,
+"Soul Urge":`Deep down you want ${lc(x.k)}. In close relationships you are ${y.l}.`,
+"Personality":`People first notice ${f(x.k)}. They may misread you as showing ${f(x.c)}.`,
+"Birth Day":`The one gift you carry: ${f(x.s)}. Practice: ${lc(y.t)}.`,
+"Maturity":`From about 35 your path and talents merge into ${lc(x.k)}. Lean into: ${y.w}.`};
+return`<details><summary>${role}: ${n}</summary><p>${L[role]}</p>${M}</details>`}
+$("#f").addEventListener("submit",e=>{e.preventDefault();
+const name=$("#nm").value,[y,m,d]=$("#dob").value.split("-").map(Number),s=$("#sys").value;
+if(!/[a-z]/i.test(name)||!y)return;
+const lp=red(red(m).v+red(d).v+red(y).v),bd=red(d),N=nm(name,s),mat=red(lp.v+N.ex.v);
+const now=new Date().getFullYear(),py=red(red(m).v+red(d).v+red(now).v);
+const drv=one(d),con=one(ds(d)+ds(m)+ds(y));
+const sg=sign(m,d),[rp,rn]=SG[sg];
+const T=new Date(),pm=red(py.v+T.getMonth()+1),pd=red(pm.v+T.getDate());
+const A=one(m),B=one(d),Y=one(y),en=36-one(lp.v);
+const P=[red(A+B),red(B+Y),null,red(A+Y)];P[2]=red(P[0].v+P[1].v);
+const C=[Math.abs(A-B),Math.abs(B-Y)];C[2]=Math.abs(C[0]-C[1]);C[3]=Math.abs(A-Y);
+const ag=[`0–${en}`,`${en+1}–${en+9}`,`${en+10}–${en+18}`,`${en+19} onward`];
+const pin=`<h3 style="margin-top:26px">Pinnacles and challenges</h3><p class="small">Four life phases. The pinnacle is the opportunity of the phase; the challenge is the lesson that comes with it.</p><div class="tw"><table><tr><th>Phase</th><th>Ages</th><th>Pinnacle</th><th>Challenge</th></tr>${P.map((p,i)=>`<tr><td>${i+1}</td><td>${ag[i]}</td><td><b>${p.v}</b> ${D[p.v].k.split(",")[0].toLowerCase()}</td><td><b>${C[i]}</b> ${C[i]?D[C[i]].c.split(",")[0].toLowerCase():"no single weak point; all lessons open"}</td></tr>`).join("")}</table></div>${P.map((p,i)=>`<div class="card" style="margin-top:10px"><h3>Phase ${i+1}: ${PH[i]}, ages ${ag[i]}</h3><p style="margin:6px 0">${ST[bs(p.v)]}${p.v>9?" Master number "+p.v+" raises the stakes and the pace.":""}</p><p class="small"><b>Lesson of the phase:</b> ${C[i]?"avoid "+D[C[i]].c.toLowerCase():"no single weak point"}.</p></div>`).join("")}<h3 style="margin-top:26px">This year</h3><p>Personal Year ${py.v}: ${PYT[bs(py.v)]}</p><p class="small">These are tendencies drawn from tradition, not forecasts. No method can tell you specific events, so read each phase as a theme to prepare for.</p>`;
+const digs=String(d).padStart(2,"0")+String(m).padStart(2,"0")+y;
+const cnt={};for(const x of digs)cnt[x]=(cnt[x]||0)+1;
+const lo=[4,9,2,3,5,7,8,1,6].map(n=>{const c=cnt[n]||0;return`<div class="${c?"has":"miss"}">${n}<small>${c?"×"+c:"missing"}</small></div>`}).join("");
+const miss=[1,2,3,4,5,6,7,8,9].filter(n=>!cnt[n]);
+let verdict=(rn===drv||rn===con)?`Your sign and your numbers point to the same planet (${rp}), so its traits are strengthened.`:`Your sign is ruled by ${rp} (${rn}) while your numbers lean on ${D[drv].p} (${drv}) and ${D[con].p} (${con}). Read the sign as temperament and the numbers as life direction.`;
+const det=`<h3 style="margin-top:26px">Detailed reading</h3>${[["Life Path",lp],["Expression",N.ex],["Soul Urge",N.su],["Personality",N.pe],["Birth Day",bd],["Maturity",mat]].map(r=>rd(r[0],r[1])).join("")}<p><button type="button" onclick="window.print()">Print or save as PDF</button></p>`;
+$("#res").innerHTML=`<div class="grid">${card("Life Path",lp,"From your birth date")}${card("Expression",N.ex,"From your full name")}${card("Soul Urge",N.su,"From the vowels")}${card("Personality",N.pe,"From the consonants")}${card("Birth Day",bd,"Day of birth")}${card("Maturity",mat,"Life Path + Expression")}${card("Personal Year "+now,py,"Theme of this year")}${card("Personal Month",pm,"Theme of this month")}${card("Personal Day",pd,"Theme of today")}</div>
+${bookBlock(name,d,m,y,drv,con)}<div class="two" style="margin-top:26px"><div><h3>Astrology link</h3><p><b>Sun sign:</b> ${sg}, ruled by ${rp}.<br><b>Psychic ${drv}:</b> ${D[drv].p}, gem ${D[drv].g}, ${D[drv].s.toLowerCase()}.<br><b>Destiny ${con}:</b> ${D[con].p}, ${D[con].k.toLowerCase()}.</p><p>${verdict}</p><p class="small">Lo Shu grid: ${miss.length?"missing "+miss.join(", ")+". Missing digits show qualities to develop, for example "+D[miss[0]].k.split(",")[0].toLowerCase()+" for "+miss[0]+".":"every digit appears, which is rare."}</p></div><div class="loring">${zr(sg)}<div class="lo" aria-label="Lo Shu grid">${lo}</div></div></div>${pin}${det}`;
+$("#res").classList.add("on");$("#res").scrollIntoView({block:"nearest"})});
+$("#ng").innerHTML=[1,2,3,4,5,6,7,8,9].map(n=>{const x=D[n];return`<div class="card" style="--pc:${PC[n]}"><div class="num">${n}</div><h3>${x.p}</h3><p class="small">Gem: ${x.g}</p><p style="margin:6px 0">${x.k}.</p><p class="small"><b>Gift:</b> ${x.s}.<br><b>Shadow:</b> ${x.c}.</p><details><summary>Traditional guide</summary>${bkH(n)}</details></div>`}).join("");
+$("#mg").innerHTML=[11,22,33].map(n=>{const x=D[n];return`<div class="card"><div class="num">${n}</div><h3>${x.k}</h3><p class="small"><b>Gift:</b> ${x.s}.<br><b>Shadow:</b> ${x.c}.</p></div>`}).join("")+Object.entries(KD).map(([n,t])=>`<div class="card"><div class="num">${n}</div><h3>Karmic debt</h3><p class="small">${t}</p></div>`).join("");
+$("#pt").innerHTML="<tr><th>Number</th><th>Vedic planet</th><th>Sepharial (Haydon)</th><th>Gem</th></tr>"+[1,2,3,4,5,6,7,8,9].map(n=>`<tr><td>${n}</td><td>${D[n].p}</td><td>${SW[n]}</td><td>${D[n].g}</td></tr>`).join("");
+$("#st").innerHTML="<tr><th>Sign</th><th>Ruler</th><th>Number</th></tr>"+Object.entries(SG).map(([s,[p,n]])=>`<tr><td>${s}</td><td>${p}</td><td>${n}</td></tr>`).join("");
+$("#tm").innerHTML=TERMS.map(t=>`<details><summary>${t[0]}</summary><p>${t[1]}</p></details>`).join("");
+
+const FR={1:[[2,3,9],[6,8]],2:[[1,5],[]],3:[[1,2,9],[5,6]],4:[[5,6,8],[1,2,9]],5:[[1,6],[2]],6:[[5,8],[1,2,3]],7:[[6,8,9],[1,2]],8:[[5,6],[1,2,9]],9:[[1,2,3],[5]]};
+const rel=(a,b)=>a===b?1:FR[a][0].includes(b)?1:FR[a][1].includes(b)?-1:0;
+const rl=(a,b)=>a===b?"the same planet":FR[a][0].includes(b)?"friendly":FR[a][1].includes(b)?"tense":"neutral";
+const esc=t=>t.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function pr(v){const[y,m,d]=v.split("-").map(Number);return{drv:one(d),lp:one(red(red(m).v+red(d).v+red(y).v).v),sg:sign(m,d)}}
+$("#cf").addEventListener("submit",e=>{e.preventDefault();
+const a=pr($("#c1").value),b=pr($("#c2").value);
+const dd=rel(a.drv,b.drv)+rel(b.drv,a.drv),ll=rel(a.lp,b.lp)+rel(b.lp,a.lp);
+const cx=rel(a.drv,b.lp)+rel(b.lp,a.drv)+rel(b.drv,a.lp)+rel(a.lp,b.drv);
+const all=[a.drv,b.drv,a.lp,b.lp],heat=all.filter(n=>[4,8,9].includes(n)).length;
+const vm=[a.drv,b.drv].filter(n=>n===2||n===6).length;
+const enemy=[rel(a.drv,b.drv),rel(b.drv,a.drv),rel(a.lp,b.lp),rel(b.lp,a.lp)].filter(x=>x<0).length;
+const cl=n=>Math.max(5,Math.min(98,Math.round(n)));
+const EL={Aries:"Fire",Leo:"Fire",Sagittarius:"Fire",Taurus:"Earth",Virgo:"Earth",Capricorn:"Earth",Gemini:"Air",Libra:"Air",Aquarius:"Air",Cancer:"Water",Scorpio:"Water",Pisces:"Water"};
+const ea=EL[a.sg],eb=EL[b.sg],es=ea===eb?2:({"Air+Fire":1,"Earth+Water":1,"Fire+Water":-1,"Air+Earth":-1})[[ea,eb].sort().join("+")]||0;
+const ra=SG[a.sg][1],rb=SG[b.sg][1],ss=es+0.5*(rel(ra,rb)+rel(rb,ra));
+const n1=$("#c3").value,n2=$("#c4").value,hasN=/[a-z]/i.test(n1)&&/[a-z]/i.test(n2);
+const xa=hasN?one(nm(n1,"p").ex.v):0,xb=hasN?one(nm(n2,"p").ex.v):0,ns=hasN?rel(xa,xb)+rel(xb,xa):0;
+const srow=`<p class="small" style="margin:4px 0">Sun signs: she is ${a.sg} (${ea}), he is ${b.sg} (${eb}). ${es===2?"Same element, so you think and feel alike.":es===1?"The elements support each other.":es===-1?"The elements clash, so pace and temper differ.":"The elements are neutral to each other."}</p>`;
+const nrow=hasN?`<p class="small" style="margin:4px 0">Name numbers: she is ${xa} (${D[xa].p}), he is ${xb} (${D[xb].p}). She sees him as ${rl(xa,xb)}; he sees her as ${rl(xb,xa)}.</p>`:`<p class="small" style="margin:4px 0">Add both names to include name numbers.</p>`;
+const love=cl(50+10*dd+3*cx+7*vm+3*ss),grow=cl(50+10*ll+3*cx+(a.lp!==b.lp?4:0)+([a.lp,b.lp].some(n=>n===3||n===8)?4:0)+2*ns);
+const peace=cl(52+7*(dd+ll)-4*heat+2*ss),tens=cl(18+17*enemy+4*heat),marr=cl(50+7*(dd+ll)+2*cx+5*vm-2*heat+3*ss+3*ns);
+const happy=cl((love+peace+marr)/3);
+const pa=D[a.drv].p,pb=D[b.drv].p;
+const bd=p=>p>=66?2:p>=45?1:0,tb=p=>p>=60?2:p>=35?1:0;
+const T={
+love:["Attraction needs some work. Her "+pa+" and his "+pb+" show affection in different ways, so say it aloud rather than assume it.","A steady, warm bond. Affection grows through shared routine more than grand gestures.","A strong pull. Her "+pa+" and his "+pb+" feel at ease together and show care readily."],
+grow:["You grow through friction. Each pushes the other out of old habits, which is slow but real change.","Growth is gradual and shared. Each brings a strength the other lacks.","You lift each other. Your life paths run side by side, so goals tend to line up."],
+marr:["Marriage is possible but needs agreed rules on money, family and time. Expect a lot of adjusting in the early years.","A workable marriage with ordinary ups and downs. Clear roles and honest talk keep it steady.","A stable, supportive marriage. Shared direction makes big decisions easier."],
+peace:["The home may feel noisy. A cooling-off habit and some time apart matter.","Mostly calm, with occasional storms that pass.","A peaceful home. Disagreements settle quickly."],
+tens:["Few friction points, only small irritations.","Some repeating friction, usually over habits and control. It is manageable.","Real friction points: stubbornness and clashing methods. Not constant fighting, but repeated flare-ups unless you plan for them."],
+happy:["Happiness will depend mostly on effort and patience from both.","Happy living is likely with ordinary effort.","Happy living is likely. You enjoy each other's company."]};
+const bar=(t,p,x,c)=>`<div style="margin:12px 0"><div style="display:flex;justify-content:space-between;font:600 15px 'Bricolage Grotesque',system-ui,sans-serif"><span>${t}</span><span>${p}%</span></div><div style="height:8px;background:var(--line);border-radius:4px"><div style="width:${p}%;height:100%;background:${c||"var(--acc)"};border-radius:4px"></div></div><p class="small" style="margin:4px 0 0">${x}</p></div>`;
+const row=(t,x,y)=>`<p class="small" style="margin:4px 0">${t}: she is ${x} (${D[x].p}), he is ${y} (${D[y].p}). She sees him as ${rl(x,y)}; he sees her as ${rl(y,x)}.</p>`;
+const fight=tens>=60?"Will they always fight? No couple does, but without a plan this pair will spar often. Pick one calm hour a week to settle money and family matters, and avoid arguing when either is tired.":tens>=35?"Will they always fight? Unlikely. Expect a few repeat arguments, mostly over habits. Name them early and they lose their sting.":"Will they always fight? Unlikely. This pair has few built-in clashes.";
+$("#cr").innerHTML=`<div class="num" style="font-size:30px">${happy>=66?"Harmonious":happy>=50?"Supportive":happy>=38?"Mixed":"Needs effort"}</div>${row("Driver",a.drv,b.drv)}${row("Life Path",a.lp,b.lp)}${srow}${nrow}${bar("Love",love,T.love[bd(love)])}${bar("Growth together",grow,T.grow[bd(grow)])}${bar("Married life",marr,T.marr[bd(marr)])}${bar("Peace at home",peace,T.peace[bd(peace)])}${bar("Tension",tens,T.tens[tb(tens)],"var(--gold)")}${bar("Happy living",happy,T.happy[bd(happy)])}<p><b>${fight}</b></p><p class="small">The percentages come from planet friendships between your driver and Life Path numbers, plus the Venus, Moon, Mars, Saturn and Rahu influences, the element and ruler of your sun signs, and name numbers when both names are given. It is one traditional lens. Real relationships depend on how two people treat each other, so use this for reflection, not as a verdict on a marriage.</p>`});
+const ct=t=>[...t.toUpperCase().replace(/[^A-Z]/g,"")].reduce((a,x)=>a+val(x,"c"),0);
+$("#nf").addEventListener("submit",e=>{e.preventDefault();
+const name=$("#n1").value.trim(),dv=$("#n2").value;
+if(!/[a-z]/i.test(name)||!dv)return;
+const dr=pr(dv).drv,tg=+$("#n3").value||dr,cur=ct(name);
+const w=name.split(/\s+/);
+const edits=(ws,lv)=>{const o=[];ws.forEach((x,wi)=>{for(const L of "AEIOUHNSY")o.push({k:lv+"-"+wi+"-add",ws:ws.map((y,k)=>k===wi?y+L.toLowerCase():y)});for(let i=0;i<x.length;i++)o.push({k:lv+"-"+wi+"-dbl",ws:ws.map((y,k)=>k===wi?y.slice(0,i+1)+y[i]+y.slice(i+1):y)})});return o};
+const good=v=>v!==name&&one(ct(v))===tg&&![13,14,16,19].includes(ct(v));
+const seen=new Set(),L1=[],L2=[];
+for(const e1 of edits(w,1)){const v=e1.ws.join(" ");if(!seen.has(v)){seen.add(v);if(good(v))L1.push({k:e1.k,v})}}
+if(L1.length<4)for(const e1 of edits(w,1))for(const e2 of edits(e1.ws,2)){const v=e2.ws.join(" ");if(!seen.has(v)){seen.add(v);if(good(v))L2.push({k:e2.k,v})}}
+const pick=(L,out)=>{const g={};L.forEach(x=>(g[x.k]=g[x.k]||[]).push(x));const ks=Object.keys(g);let n=0;while(out.length<4&&n<40){for(const k of ks){if(out.length<4&&g[k].length>n)out.push(g[k][n])}n++}return out};
+const ok=pick(L2,pick(L1,[])).map(x=>x.v);
+$("#nr").innerHTML=`<p>Current total <b>${cur}</b>, which reduces to <b>${one(cur)}</b> (${D[one(cur)].p}). Target <b>${tg}</b> (${D[tg].p}).</p>`+(one(cur)===tg?`<p class="small">Your name already matches the target.</p>`:ok.length?`<p class="small">${ok.length} spelling${ok.length>1?"s":""} that reach ${tg}:</p><ul>${ok.map(v=>`<li>${esc(v)} <span class="small">(total ${ct(v)})</span></li>`).join("")}</ul><p class="small">Traditional practice, not a guarantee. Legal name changes carry real paperwork, so a nickname or signature is a lighter way to try one.</p>`:`<p class="small">No simple one-letter change reaches ${tg}. Try another target.</p>`)});
+$("#py").innerHTML="<tr><th>Year</th><th>Typical theme</th></tr>"+[1,2,3,4,5,6,7,8,9].map(n=>`<tr><td>${n}</td><td>${PYT[n]}</td></tr>`).join("");
+$("#phg").innerHTML=[1,2,3,4,5,6,7,8,9].map(n=>`<div class="card"><div class="num">${n}</div><p class="small" style="margin:0">${ST[n]}</p></div>`).join("");
+(function(){let t="";for(let i=0;i<36;i++){const a=i*10*Math.PI/180,r1=i%3?168:160,r2=176;t+=`<line x1="${200+r1*Math.sin(a)}" y1="${200-r1*Math.cos(a)}" x2="${200+r2*Math.sin(a)}" y2="${200-r2*Math.cos(a)}"/>`}
+for(let i=0;i<9;i++){const a=i*40*Math.PI/180;t+=`<text x="${200+128*Math.sin(a)}" y="${200-128*Math.cos(a)}" text-anchor="middle" dominant-baseline="central" font-size="30" font-family="Cinzel,Georgia,serif" fill="currentColor" stroke="none">${i+1}</text>`}
+$("#wheel").innerHTML=`<svg viewBox="0 0 400 400" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="200" cy="200" r="190"/><circle cx="200" cy="200" r="160"/><circle cx="200" cy="200" r="92" stroke-dasharray="3 6"/><circle cx="200" cy="200" r="30"/>${t}</svg>`})();
+try{const L=[...document.querySelectorAll("nav a")];if("IntersectionObserver" in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)L.forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+e.target.id))}),{rootMargin:"-30% 0px -60% 0px"});document.querySelectorAll("section[id]").forEach(x=>io.observe(x))}}catch(e){}
+(function(){const r=document.documentElement,b=$("#tg");const eff=()=>r.dataset.theme||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+try{const t=localStorage.getItem("ank-theme");if(t)r.dataset.theme=t}catch(e){}
+const sync=()=>{const d=eff()==="dark";b.textContent=d?"☀":"☾";b.setAttribute("aria-label","Switch to "+(d?"light":"dark")+" theme")};sync();
+b.addEventListener("click",()=>{const n=eff()==="dark"?"light":"dark";r.dataset.theme=n;try{localStorage.setItem("ank-theme",n)}catch(e){}sync()})})();
+(function(){
+const NM="Cinzel,Georgia,serif",tx=(x,y,t,z,f,o)=>`<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="central" font-size="${z}" font-family="${NM}" fill="${f||"currentColor"}" stroke="none" opacity="${o||1}">${t}</text>`;
+let L="",pts=[];
+for(let i=0;i<9;i++)pts.push([i%2?68:32,22+i*40]);
+L+=`<polyline points="${pts.map(p=>p.join(",")).join(" ")}" stroke="currentColor" stroke-width=".8" stroke-dasharray="2 3" opacity=".5"/>`;
+pts.forEach((p,i)=>{const c=PC[i+1];L+=`<circle cx="${p[0]}" cy="${p[1]}" r="18" fill="${c}" opacity=".10" stroke="none"/><circle cx="${p[0]}" cy="${p[1]}" r="15" fill="${c}" fill-opacity=".2" stroke="${c}" stroke-width="1.2"/><circle cx="${p[0]}" cy="${p[1]}" r="11" stroke="${c}" stroke-width=".6" stroke-dasharray="1.5 2" opacity=".8"/>`+tx(p[0],p[1]+1,i+1,15,c)});
+$("#sl").innerHTML=`<svg viewBox="0 0 100 370" fill="none" preserveAspectRatio="xMidYMin meet">${L}</svg>`;
+let R=`<path d="M58 24A22 22 0 1 0 58 66A17 17 0 1 1 58 24Z" fill="currentColor" fill-opacity=".3" stroke-width="1"/>`+tx(20,22,"✦",9,0,.9)+tx(82,58,"✦",7,0,.8)+tx(80,18,"✦",6,0,.7);
+R+=`<g stroke-width="1"><circle cx="50" cy="135" r="37" opacity=".6"/><path d="M50 103L79 152H21Z"/><path d="M50 167L21 118H79Z"/><circle cx="50" cy="135" r="12" opacity=".7"/><circle cx="50" cy="135" r="2" fill="currentColor"/></g>`;
+const LS=[4,9,2,3,5,7,8,1,6];
+LS.forEach((n,i)=>{const c=i%3,r=(i/3)|0,x=17+22*c,y=202+22*r;R+=`<rect x="${x}" y="${y}" width="22" height="22" rx="3" stroke-width=".9" fill="currentColor" fill-opacity="${n===5?.25:.06}"/>`+tx(x+11,y+12,n,11)});
+R+=`<circle cx="50" cy="325" r="14" fill="#F59E0B" fill-opacity=".4" stroke="#F59E0B" stroke-width="1"/><circle cx="50" cy="325" r="6" fill="#F59E0B" stroke="none"/>`;
+for(let i=0;i<12;i++){const a=i*30*Math.PI/180,r2=i%2?25:30;R+=`<line x1="${50+19*Math.sin(a)}" y1="${325-19*Math.cos(a)}" x2="${50+r2*Math.sin(a)}" y2="${325-r2*Math.cos(a)}" stroke="#F59E0B" stroke-width="1.2"/>`}
+$("#sr").innerHTML=`<svg viewBox="0 0 100 370" fill="none" stroke="currentColor" preserveAspectRatio="xMidYMin meet">${R}</svg>`})();
+</script>
+</body>
+</html>
